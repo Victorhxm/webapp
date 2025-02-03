@@ -11,7 +11,7 @@ app.config['dbconfig'] = { 'host': '127.0.0.1',
             'password': 'vsearchpasswd',
             'database': 'vsearchlogDB',}
 
-def log_request (req: 'flask_request', res: str) -> None:
+def log_request (req: 'flask_request', res: str) -> None: # type: ignore
     """Log details of the web request and the results."""
     with UseDatabase (app.config['dbconfig']) as cursor:
          _SQL = """INSERT INTO log  
@@ -25,7 +25,7 @@ def log_request (req: 'flask_request', res: str) -> None:
                         res,))
 
 @app.route('/search4', methods=['POST'])
-def do_search() -> 'html':
+def do_search() -> 'html': # type: ignore
     phrase = request.form['phrase']
     letters = request.form['letters']
     title = 'Here are your results:'
@@ -39,12 +39,12 @@ def do_search() -> 'html':
  
 @app.route('/')           
 @app.route('/entry')
-def entry_page() -> 'html':
+def entry_page() -> 'html': # type: ignore
     return render_template('entry.html',
                            the_title = 'Welcome to search4letters on the web!')
                            
 @app.route('/viewlog') 
-def view_the_log() -> 'html': 
+def view_the_log() -> 'html':  # type: ignore
     
     with UseDatabase(app.config['dbconfig']) as cursor:
         _SLQ = """select phrase, letters, ip, browser_string, results 
