@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 def log_request (req: 'flask_request', res: str) -> None:
     
-    # Informações de conexão 
+    # Infor conection 
     dbconfig = { 'host': '127.0.0.1',
                 'user': 'vsearch',
                 'password': 'vsearchpasswd',
