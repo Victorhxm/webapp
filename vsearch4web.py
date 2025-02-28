@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from vsearch import search4letters
 from markupsafe import escape
 from DBcm import UseDatabase
+from checker import check_logged_in
 
 
 app = Flask(__name__)
@@ -45,6 +46,7 @@ def entry_page() -> 'html': # type: ignore
                            the_title = 'Welcome to search4letters on the web!')
                            
 @app.route('/viewlog') 
+@check_logged_in
 def view_the_log() -> 'html':  # type: ignore
     
     with UseDatabase(app.config['dbconfig']) as cursor:
@@ -58,7 +60,18 @@ def view_the_log() -> 'html':  # type: ignore
                             the_title='View Log',
                             the_row_titles=titles,
                             the_data=contents,)
+    
+@app.route('/login')
+def do_login ()-> str:
+    session['logged_in'] = True
+    return 'Agora você está logado.'
 
+@app.route('/logout')
+def do_logout() -> str:
+    session.pop('logged_in')
+    return 'Agora você está desconectado'
+
+app.secret_key = 'computador'
 
 if __name__=='__main__':
     app.run(debug=True)
