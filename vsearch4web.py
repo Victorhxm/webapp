@@ -24,13 +24,6 @@ def log_request (req: 'flask_request', res: str) -> None: # type: ignore
                         req.headers.get('User-Agent'), 
                         res,))
 @app.route('/status')
-def check_status() -> str:
-    if 'looged_in' in session:
-        return 'You are currently loggerd in.'
-    return'You are NOT logged in.'
-
-
-
 
 @app.route('/search4', methods=['POST'])
 def do_search() -> 'html': # type: ignore
